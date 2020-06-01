@@ -4,7 +4,7 @@
 
 案例是是一个简单的商城，首页前三个板块是可以用的，分图文  图片 商品，
 
-案例是用vue做的，用到了Vue Router 、Vuex、mint ui 、axios
+案例是用vue做的，用到了Vue Router 、Vuex、mint ui 、Axios
 
 优化了首页的加载 ，使用了骨架屏，配置了组件的动态按需加载，首页加载不会有长时间的白屏。
 
