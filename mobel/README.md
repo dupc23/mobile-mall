@@ -1,24 +1,31 @@
 # hello
 
-## Project setup
-```
-npm install
-```
+### 关于案例
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+案例是是一个简单的商城，首页前三个板块是可以用的，分图文  图片 商品，
 
-### Compiles and minifies for production
-```
-npm run build
-```
+案例是用vue做的，用到了Vue Router 、Vuex、mint ui 、axios
 
-### Lints and fixes files
-```
-npm run lint
-```
+优化了首页的加载 ，使用了骨架屏，配置了组件的动态按需加载，首页加载不会有长时间的白屏。
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+对seo做了简单的优化，配置了预渲染插件，
+
+其中图片列表用到了图片懒加载
+
+商品列表用到了上滑刷新，下滑加载
+
+### 关于接口
+
+接口使用的是http://www.mock.com/网站，接口很简陋
+
+其中有一些筛选商品 和 评论分页 都是前端做的，
+
+数据不是很多
+
+------
+
+搜索和个人页面没有完善 
+
+因为api的原因 登录页没有办法做了。
+
+图片源地址有防盗链，图片偶尔会加载不出来
