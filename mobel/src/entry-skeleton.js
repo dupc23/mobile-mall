@@ -5,5 +5,5 @@ export default new Vue({
     components: {
         Skeleton:Skeleton
     },
-    template:`<Skeleton></Skeleton>`
+    template:`<Skeleton skeletonId="listSkeleton"></Skeleton>`
 })

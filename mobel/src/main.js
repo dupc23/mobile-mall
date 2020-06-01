@@ -39,9 +39,6 @@ Vue.component('comment', comment);
 import MySwiper from "./components/MySwiper.vue";
 Vue.component('swiper', MySwiper);
 
-//引入事件总线
-// import EventBus from "./EventBus.js";
-// Vue.prototype.$EventBus = EventBus;
 
 //添加请求拦截器
 Vue.axios.interceptors.request.use(function (config) {
@@ -68,7 +65,8 @@ new Vue({
   router,
   store,
   mounted(){
-    document.dispatchEvent(new Event('renderer-event'));
+    // 预渲染方法
+    // document.dispatchEvent(new Event('renderer-event'));
   },
   render: h => h(App)
 }).$mount('#app')

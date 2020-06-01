@@ -4,7 +4,7 @@ Vue.use(VueRouter)
 
 //导入主页面
 const  Home = () => import( "../views/Home.vue" );
-const  Vip = () => import( "../views/Vip.vue" );
+const  Personal = () => import( "../views/Personal.vue" );
 const  ShopCart = () => import( "../views/ShopCart.vue" );
 const  Search = () => import( "../views/Search.vue" );
 
@@ -26,9 +26,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/vip',
-    name: 'vip',
-    component: Vip
+    path: '/personal',
+    name: 'personal',
+    component: Personal
   },
   {
     path: '/shopcart',
@@ -96,6 +96,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
+  // mode: history,
   routes
 })
 

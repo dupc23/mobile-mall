@@ -2,9 +2,11 @@
     <div class="comment">
 <!--        输入框-->
         <textarea rows="3"></textarea>
-        <mt-button type="primary" @click="commentSubmit">提交</mt-button>
+        <div class="btn-position">
+            <mt-button type="primary" @click="commentSubmit">提交</mt-button>
+        </div>
 <!--        评论列表-->
-        <p class="comment-list">评论列表--<span>xx</span></p>
+        <p class="comment-list">评论列表--<span>{{comment.length}}</span></p>
         <ul>
             <li v-for="(item,index) in comment" :key="index">
                 <span>{{item.userName}}</span>
@@ -16,7 +18,9 @@
 
             </li>
         </ul>
-        <mt-button type="primary" @click="loadMore(commentPage)">加载更多</mt-button>
+        <div class="btn-position">
+            <mt-button type="primary" @click="loadMore(commentPage)" >加载更多</mt-button>
+        </div>
     </div>
 </template>
 
@@ -35,6 +39,8 @@
         methods: {
             //加载更多评论
             loadMore(page){
+                //用来放当前页评论
+                let commentPageList = [];
                 if(page > this.commentEndPage) {
                     Toast({
                         message: '已经是最后一条了',
@@ -42,7 +48,6 @@
                     });
                     return;
                 }
-                this.comment=[];
                 this.axios.get('/photo/comment')
                     .then(res => {
                         //对数据遍历 取出当前图片的评论
@@ -51,11 +56,12 @@
                                 this.commentEndPage = Math.ceil(item.comment.length / 10);
                                 //对评论遍历默认加载10条
                                 item.comment.forEach((item,index)=>{
-                                    if(index >= this.commentPage*10) return;
-                                    this.comment.push(item);
+                                    if( index < (this.commentPage - 1)*10 || index >= this.commentPage*10 ) return;
+                                    commentPageList.push(item);
                                 })
                             }
                         })
+                        this.comment.push(...commentPageList);
                         this.commentPage += 1;
                     })
                     .catch(err => {
@@ -99,6 +105,9 @@
         box-sizing: border-box;
         padding: 5px;
         margin-bottom: 10px;
+    }
+    .btn-position{
+        padding: 10px;
     }
     /*.comment ul li>span:nth-child(2){*/
     /*    margin-left: 20px;*/

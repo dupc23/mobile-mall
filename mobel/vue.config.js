@@ -66,28 +66,28 @@ module.exports = {
                 },
                 minimize: true,
                 quiet: true,
-                // router: {
-                //     mode: 'hash',
-                //     routes: [
-                //         { path: '/', skeletonId: 'listSkeleton' },
-                //         { path: /^\/detail/, skeletonId: 'detailSkeleton' }
-                //     ]
-                // }
+                router: {
+                    mode: 'hash',
+                    routes: [
+                        { path: '/', skeletonId: 'listSkeleton' },
+                        { path: /^\/home/, skeletonId: 'listSkeleton' }
+                    ]
+                }
             }),
         //  预渲染插件配置
-            new PrerenderSPAPlugin({
-                staticDir: path.join(__dirname, './dist'),
-                routes: ['/','/home'],
-                //预渲染器，必须配置
-                renderer: new Renderer({
-                    inject: {
-                        foo: 'bar'
-                    },
-                    headless: false,
-                    //渲染后执行的方法名，在入口文件使用 document.dispatchEvent(new Event{'renderer-event'});
-                    renderAfterDocumentEvent: "renderer-event"
-                }),
-            }),
+        //     new PrerenderSPAPlugin({
+        //         staticDir: path.join(__dirname, './dist'),
+        //         routes: ['/','/home'],
+        //         //预渲染器，必须配置
+        //         renderer: new Renderer({
+        //             inject: {
+        //                 foo: 'bar'
+        //             },
+        //             headless: false,
+        //             //渲染后执行的方法名，在入口文件使用 document.dispatchEvent(new Event{'renderer-event'});
+        //             renderAfterDocumentEvent: "renderer-event"
+        //         }),
+        //     }),
         ],
     },
     css: {

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import GoodsTool from "./GoodsTool";
+    import GoodsTool from "../public/GoodsTool";
     import homeImg from './assets/home.png';
     import vipImg from './assets/vip.png';
     import shopcartImg from './assets/shopcart.png'
@@ -49,9 +49,9 @@
                         "desc": '首页'
                     },
                     {
-                        "id": "vip",
-                        "img": vipImg,
-                        "desc": "VIP"
+                        "id": "search",
+                        "img": searchImg,
+                        "desc": "搜索"
                     },
                     {
                         "id": "shopcart",
@@ -59,9 +59,9 @@
                         "desc": "购物车"
                     },
                     {
-                        "id": "search",
-                        "img": searchImg,
-                        "desc": "搜索"
+                        "id": "personal",
+                        "img": vipImg,
+                        "desc": "个人"
                     }
                 ]
             }

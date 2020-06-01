@@ -3,8 +3,13 @@
 <!--        照片分类-->
         <div class="category-sort">
                 <ul>
-                <router-link v-for="(item,index) in photoSort" :key="item.id" @click="changePhotoSort(item.id)" :to="{name:'photo.list',params:{categoryId:item.id}}">
-                    <li :class="{active: index==currentIndex}">{{item.text}}</li>
+                <router-link
+                        v-for="(item,index) in photoSort"
+                        :key="item.id"
+                        @click.stop="changePhotoSort(item.id)"
+                        :to="{name:'photo.list',params:{categoryId:item.id}}"
+                >
+                    <li :class="{active: index == currentIndex}" v-auto-scroll-x="(index - 2) * 84">{{item.text}}</li>
                 </router-link>
             </ul>
         </div>
@@ -66,8 +71,10 @@
             },
             //改变当前图片分类
             changePhotoSort(id){
+                console.log('父盒子');
                 if(this.$route.params.categoryId != id){
                     this.getCategoryPohto(id);
+
                 }
             }
         },
@@ -91,6 +98,21 @@
             //当前动态路由参数改变 则 获取相应的图片
             this.getCategoryPohto(to.params.categoryId);
             next();
+        },
+        directives: {
+            //图片导航栏的自动滚动指令
+            autoScrollX: {
+                bind: function (el,binding) {
+                    el.addEventListener('click',() => {
+                        let scrollLeft = el.parentNode.parentNode.scrollLeft;
+                        if(scrollLeft > binding.value){
+                            el.parentNode.parentNode.scrollLeft = binding.value;
+                        }else {
+                            el.parentNode.parentNode.scrollLeft = scrollLeft + binding.value;
+                        }
+                    });
+                }
+            }
         }
     }
 //    scoped
@@ -135,18 +157,6 @@
         border-radius: 10px;
         padding: 0 10px;
         box-sizing: border-box;
-    }
-.category-sort a,
-.category-sort a:hover,
-.category-sort a:active,
-.category-sort a:visited,
-.category-sort a:link,
-.category-sort a:focus{
-        -webkit-tap-highlight-color:rgba(0,0,0,0);
-        -webkit-tap-highlight-color: transparent;
-        outline:none;
-        background: none;
-        text-decoration: none;
     }
 
     /*图片排列列表*/

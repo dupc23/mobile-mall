@@ -25,12 +25,12 @@
 
 <script>
 
-import homeListImg1 from '../assets/home_1.gif';
-import homeListImg2 from '../assets/home_2.gif';
-import homeListImg3 from '../assets/home_3.gif';
-import homeListImg4 from '../assets/home_4.gif';
-import homeListImg5 from '../assets/home_5.gif';
-import homeListImg6 from '../assets/home_6.gif';
+import homeListImg1 from '../assets/home_1.png';
+import homeListImg2 from '../assets/home_2.png';
+import homeListImg3 from '../assets/home_3.png';
+import homeListImg4 from '../assets/home_4.png';
+import homeListImg5 from '../assets/home_5.png';
+import homeListImg6 from '../assets/home_6.png';
 
 let list = [
   {
@@ -117,18 +117,21 @@ export default {
     display: inline-block;
     width: 33%;
     height: 120px;
-    margin-bottom: 7px;
+    margin-bottom: 20px;
     box-sizing: border-box;
   }
   .home-list>ul>li>a{
     display: block;
-    /* text-decoration: none; */
     color: #000;
     text-align: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
   }
   .home-list>ul>li>a>img{
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
   }
 </style>

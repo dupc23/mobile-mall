@@ -15,14 +15,15 @@
       </li>
     </ul>
     <p class="goodsTotal">
-          <span>已添加到购物车数量：{{pyment.count}}</span>
+          <span>已添加：{{pyment.count}}</span>
           <span>总价：￥{{pyment.total}}</span>
     </p>
   </div>
 </template>
 
 <script>
-  import GoodsTool from "../GoodsTool";
+  import GoodsTool from "../../public/GoodsTool";
+  import {massageBox} from "../components/MassageBox";
 
   export default {
     name: 'ShopCart',
@@ -109,22 +110,32 @@
     },
 
     beforeRouteLeave(to,from,next) {
-      let isLeave, goodList = {};
-      //如果当前有商品  提示保存
-      if (this.goods.length != 0) {
-        isLeave = confirm('确定要离开嘛');
-        //判断用户点击 是否
-        if (isLeave) {
-          //遍历当前商品数据 取出商品id 和数量
-          this.goods.forEach(good => {
-            goodList[good.goodId] = good.num;
-          })
-          //保存到本地存储对象
-          GoodsTool.saveGoods(goodList);
-          next();
-        } else {
-          next(false);
-        }
+      let goodList = {};
+      //遍历当前商品数据 取出商品id 和数量
+      this.goods.forEach(good => {
+        goodList[good.goodId] = good.num;
+      })
+      //比对当前购物车商品和本地存储对象的商品数据是否不同
+      if ( JSON.stringify(goodList) != JSON.stringify(GoodsTool.getGoodList()) ) {
+        // isLeave = confirm('确定要离开嘛');
+        //自定义提示框
+        massageBox({
+          title: '提示',
+          content: '要保存改动的数据吗？',
+          ok: '确定',
+          cancel: '取消',
+          //确定
+          handleOk: () => {
+            //保存商品到本地存储对象
+            GoodsTool.saveGoods(goodList);
+            next();
+          },
+          //取消
+          handleCancel: () => {
+            next();
+          }
+        })
+
       }else {
         next();
       }
@@ -137,6 +148,7 @@
 <style lang="css" scoped>
   .shopcart {
     overflow-y: scroll;
+    padding-bottom: 30px;
   }
 
   .shopcart div {
@@ -199,15 +211,16 @@
   }
 
   .goodsTotal{
+    height: 30px;
     position: fixed;
     bottom: 55px;
     background: orangered;
     color: white;
-    display: block;
+    display: flex;
     width: 100%;
   }
   .goodsTotal span{
-    display: inline-block;
-    margin: 5px 25px;
+    padding: 5px 30px;
+    flex: 1;
   }
 </style>

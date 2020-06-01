@@ -23,13 +23,15 @@
                 </li>
 
                 <li>
-                    <mt-button type="primary" size="small" @click.native="addShopCart">
-                        加入购物车
-                    </mt-button>
-                    <transition name="ball" @after-enter="ballHeader">
-                        <div class="ball" v-show="isShowBall"></div>
-                    </transition>
-                    <mt-button type="danger" size="small">立即购买</mt-button>
+                    <BtnDebounce
+                            type="primary"
+                            size="small"
+                            @click="addShopCart"
+                            class="btn-left-position"
+                    > 加入购物车 </BtnDebounce>
+
+                    <mt-button type="danger" size="small" class="btn-right-position">立即购买</mt-button>
+
                 </li>
             </ul>
         </div>
@@ -55,16 +57,23 @@
 </template>
 
 <script>
-    import GoodsTool from "../../GoodsTool";
+// <!--    加载工具  上传商品数据到浏览器缓存-->
+    import GoodsTool from "../../../public/GoodsTool";
+    import { Toast } from 'mint-ui';
+    //加载防抖按钮
+    import BtnDebounce from "../../components/BtnDebounce";
     export default {
         name: "GoodsDetail",
         data(){
             return {
                 url: '/home/lunbo',
                 good: {},
-                num:1,
-                isShowBall:false
+                num: 1,
+                isShowBall: false
             }
+        },
+        components: {
+            BtnDebounce
         },
         methods:{
             //跳转到商品图文详情页面
@@ -85,20 +94,21 @@
                 if(this.num >= this.good.stock) return;
                 this.num ++;
             },
-            //购物车点击就之后执行动画
+            //购物车点击
             addShopCart(){
-                this.isShowBall = true;
-            },
-            //购物车动画执行完毕之后执行的方法
-            ballHeader(){
-                // this.$EventBus.$emit('sendPickNum',this.num);
-                this.isShowBall = false;
+                // this.isShowBall = true;
+                Toast({
+                    message: '添加成功',
+                    duration: 1000
+                });
                 GoodsTool.addGood({id:this.$route.params.id, num:this.num});
                 this.$store.dispatch('addNumAction', this.num);
-            }
+            },
         },
         activated() {
+            // 给导航栏传递当前组件标题
             this.$emit('getTitle', '商品详情');
+
             this.axios.get('/goods/desc')
             .then(res => {
                 res.data.forEach(item => {
@@ -131,6 +141,8 @@
         display: block;
         padding: 5px;
     }
+
+    /*标题*/
     .product-desc li:nth-child(1){
         height: 60px;
         margin: 10px 0;
@@ -154,6 +166,7 @@
         font-weight: 800;
         color: orangered;
     }
+
     /*购买数量*/
     .number-li>span{
         display: inline-block;
@@ -172,9 +185,21 @@
     .number-li>span:nth-child(2){
         width: 40px;
     }
+
+    /*功能按钮，加入购物车，立即购买*/
     .product-desc li:last-child{
-        display: flex;
-        justify-content: space-around;
+        display: block;
+        width: 100%;
+        height: 40px;
+        position: relative;
+    }
+    .btn-left-position{
+        position: absolute;
+        left: 10%;
+    }
+    .btn-right-position{
+        position: absolute;
+        right: 10%;
     }
 
     /*商品参数*/
@@ -194,51 +219,6 @@
     }
     .product-info li{
         margin: 5px 0;
-    }
-
-    /*购物车小球动画*/
-    .ball{
-        position: relative;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: orangered;
-        top: 0;
-        left: -80px;
-        z-index: 5;
-    }
-    .ball-enter-active{
-        transition: all .5s;
-        animation:bounce-in 1.5s linear;
-    }
-    .ball-enter , .ball-leave/* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-        display: none;
-    }
-    @keyframes bounce-in {
-        0%{
-            transform: translate(0px,0px);
-            width: 20px;
-            opacity: 1;
-        }
-        25%{
-            transform: translate(70px,-80px);
-            width: 15px;
-        }
-        50%{
-            transform: translate(190px,140px);
-            width: 10px;
-        }
-        75%{
-            transform: translate(170px,180px);
-            width: 15px;
-            opacity: 1;
-        }
-        100%{
-            transform: translate(160px,250px);
-            width: 23px;
-            opacity: 0;
-        }
     }
 
 </style>
